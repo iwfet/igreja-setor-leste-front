@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="4" failures="0" errors="0" time="0.556">
+  <testsuite name="I18nProvider" errors="0" failures="0" skipped="0" timestamp="2024-07-18T23:42:43" time="0.234" tests="1">
+    <testcase classname="I18nProvider should call init when setting up provider" name="I18nProvider should call init when setting up provider" time="0.048">
+    </testcase>
+  </testsuite>
+  <testsuite name="useI18n" errors="0" failures="0" skipped="0" timestamp="2024-07-18T23:42:43" time="0.114" tests="3">
+    <testcase classname="useI18n should call t function from react-i18next" name="useI18n should call t function from react-i18next" time="0.006">
+    </testcase>
+    <testcase classname="useI18n should call t function with bindings" name="useI18n should call t function with bindings" time="0.002">
+    </testcase>
+    <testcase classname="useI18n should call t function when scopedT is called" name="useI18n should call t function when scopedT is called" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>
