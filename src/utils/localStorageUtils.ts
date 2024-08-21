@@ -37,6 +37,9 @@ export const updateToken = (token: string) => {
   removeToken()
   saveToken(token)
 }
+export const tokenExist = (): boolean => {
+  return !!getToken()
+}
 
 
 export const serialize = (key: string, value: any): void => {

@@ -12,13 +12,13 @@ export const Route = createFileRoute('/_authenticated')({
       })
     }
   },
+  
   component: AuthLayout,
 })
 
 export function AuthLayout() {
   return (
     <div className="flex flex-col">
-      {/*<Navbar/>*/}
       <main className="flex-1 p-6 overflow-auto">
         <Outlet/>
       </main>

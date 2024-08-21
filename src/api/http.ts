@@ -1,6 +1,5 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import axiosRetry from 'axios-retry';
-import { isEmpty } from '@/utils/isEmpty.ts';
+import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
+import {isEmpty} from '@/utils/isEmpty.ts';
 import {getToken, removeToken} from "@/utils";
 
 
@@ -20,11 +19,11 @@ export default class BaseHttp {
     const urlBasse = import.meta.env.PROD ? `http://localhost:5005/api${subUrl}` : `http://localhost:5005/api${subUrl}`
 
     this.axiosInstance = axios.create({
-      baseURL:urlBasse ,
-      headers: {'Content-Type': 'application/json' },
+      baseURL: urlBasse,
+      headers: {'Content-Type': 'application/json'},
     });
 
-    axiosRetry(this.axiosInstance, { retries: 3 });
+    // axiosRetry(this.axiosInstance, {retries: 3});
 
     this.axiosInstance.interceptors.request.use(
       (config: any) => {
@@ -41,9 +40,8 @@ export default class BaseHttp {
     );
 
     this.axiosInstance.interceptors.response.use(
-      (response:AxiosResponse) => (response.status === this.NO_CONTENT ? null : response.data),
+      (response: AxiosResponse) => (response.status === this.NO_CONTENT ? null : response.data),
       (error) => this.handleError(error),
-
     );
   }
 
@@ -67,13 +65,14 @@ export default class BaseHttp {
     const defaultError: ApiError = {
       message: 'System unavailable - Try again later',
       error: 'UnknownError',
-      statusCode: error.response?.status || 500,
+      statusCode: error.response?.status,
     };
 
     if (error.response) {
       if (error.response.status === this.UNAUTHORIZED) {
         removeToken();
-        return Promise.reject({ ...defaultError, error: 'Unauthorized', statusCode: this.UNAUTHORIZED });
+        window.location.href = '/login';
+        return Promise.reject({...defaultError, error: 'Unauthorized', statusCode: this.UNAUTHORIZED});
       }
       return Promise.reject(this.handleApiError(error.response.data));
     }

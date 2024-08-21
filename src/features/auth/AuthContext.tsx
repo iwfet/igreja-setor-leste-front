@@ -1,10 +1,9 @@
 import {createContext, FC, useEffect, useState} from 'react';
 import {AuthContextProps, AuthProviderProps, AuthState} from "@/features/auth/types";
 import {useLoading} from "@/features/Loading";
-import {removeToken, updateToken} from "@/utils";
-import {toast } from 'react-toastify';
+import {removeToken, tokenExist, updateToken} from "@/utils";
+import {toast} from 'react-toastify';
 import {AuthService, UsuarioService} from "@/api";
-
 
 
 export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
@@ -17,7 +16,10 @@ export const AuthProvider: FC<AuthProviderProps> = ({children}) => {
   const {setLoading} = useLoading();
 
   useEffect(() => {
-    getUserInfo().then(() => null);
+    if (tokenExist()) {
+      getUserInfo()
+        .then(() => null);
+    }
 
   }, []);
 
@@ -29,7 +31,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({children}) => {
 
       setAuthState({
         nomeUsuario,
-        telasPermisao ,
+        telasPermisao,
       });
 
       toast.success('Login successful!');
@@ -56,7 +58,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({children}) => {
       const {telasPermisao, nomeUsuario} = response;
       setAuthState({
         nomeUsuario,
-        telasPermisao ,
+        telasPermisao,
       });
     } catch (error) {
       console.error(error);
@@ -66,10 +68,15 @@ export const AuthProvider: FC<AuthProviderProps> = ({children}) => {
     }
   };
 
-  const checkAuthStatus = () => true;
+  const checkAuthStatus = () => tokenExist();
 
   return (
-    <AuthContext.Provider value={{...authState, login, logout, checkAuthStatus}}>
+    <AuthContext.Provider value={{
+      ...authState,
+      login,
+      logout,
+      checkAuthStatus
+    }}>
       {children}
     </AuthContext.Provider>
   );

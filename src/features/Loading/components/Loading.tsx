@@ -1,11 +1,9 @@
-import  {FC, ReactNode} from 'react';
-import {useLoading} from "@/features/Loading/hooks/UseLoading.tsx";
+import {FC, ReactNode} from 'react';
+import {useLoading} from "@/features/Loading";
 
 
-
-
-export const LoadingGlobal: FC<{ children: ReactNode }> = ({ children }) => {
-  const { loadingExec } = useLoading();
+export const LoadingGlobal: FC<{ children: ReactNode }> = ({children}) => {
+  const {loadingExec} = useLoading();
   return (
     <>
       {loadingExec && (
